@@ -4,11 +4,11 @@ Once you import the Paloalto Dashboard, it should look like this.
 ![Dashboard](/paloalto/pictures/Dashboard2.png)
 ![Dashboard](/paloalto/pictures/Dashbaord3.png)
 
-## Setting up the enviroment
-If you don't already have a Telegraf, InfluxDB and Grafana instance u can follow these instructions: **Anleitung einfügen**
+# Setting Up the Environment
+If you don't already have a Telegraf, InfluxDB, and Grafana instance, you can follow these instructions: **Insert Instructions** Here
 
-## Additional Information about the telegraf collector
-The telegraf collector checks the ports from 1 - 30. If the port ist acitv it will show up in the grafana dashboard. After u found your acitv ports, it's up to you, if you wanna stop monitoring the other ports. To stop monitoring them, just remove them from the telegraf-panos.conf file.
+# Additional Information about the Telegraf Collector
+The Telegraf collector checks ports from 1 to 30. If the port is active, it will appear on the Grafana dashboard. After you identify your active ports, it's up to you whether you want to stop monitoring the other ports. To stop monitoring them, simply remove them from the telegraf-panos.conf file. We also recommend editing the overrides used in the "Active Session", "Traffic In" and "Traffic Out" panels because the installed overrides were created for our specific ports.
 ```
 [[inputs.snmp.field]]
   name = "ifHCOutOctets.1"
