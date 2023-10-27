@@ -193,7 +193,7 @@
           "refId": "A"
         }
       ],
-      "title": "Temp Degree Port${TempActivPort}",
+      "title": ".",
       "type": "stat"
     },
     {
@@ -360,7 +360,7 @@
           "refId": "A"
         }
       ],
-      "title": "Temp Status Port${TempActivPort}",
+      "title": ".",
       "type": "stat"
     },
     {
@@ -388,8 +388,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -482,8 +481,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -603,6 +601,6 @@
   "timezone": "",
   "title": "Warnsystem AKCP",
   "uid": "b2ef3647-4611-4f22-9622-8fa8fd429718",
-  "version": 28,
+  "version": 29,
   "weekStart": ""
 }
