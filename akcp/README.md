@@ -1,5 +1,5 @@
 # How to Monitor AKCP Sensor with Telegraf, InfluxDB, and Grafana
-Once you import the AKCP Dashboard, it should appear as shown below (Some data has been blacked in the images for privacy reasons):
+Once you import the AKCP Dashboard, it should appear as shown below (some data has been blacked in the images for privacy reasons):
 ![Dashboard](/akcp/pictures/AKCPDashboard1.jpeg)
 ![Dashboard](/akcp/pictures/AKCPDashboard2.jpeg)
 

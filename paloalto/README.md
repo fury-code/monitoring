@@ -1,5 +1,5 @@
 # How to monitor Paloalto Firewalls with Telegraf, InfluxDB and Grafana
-Once you import the Paloalto Dashboard, it should look like this (Some data has been blacked in the images for privacy reasons):
+Once you import the Paloalto Dashboard, it should look like this (some data has been blacked in the images for privacy reasons):
 ![Dashboard](/paloalto/pictures/Dashboard1.png)
 ![Dashboard](/paloalto/pictures/Dashboard2.png)
 ![Dashboard](/paloalto/pictures/Dashbaord3.png)
