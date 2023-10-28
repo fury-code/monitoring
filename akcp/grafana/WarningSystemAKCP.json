@@ -67,6 +67,251 @@
         "x": 0,
         "y": 0
       },
+      "id": 32,
+      "panels": [],
+      "title": "System",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "id": 35,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"SystemName\")\r\n  |> filter(fn: (r) => r[\"agent_host\"] == \"${AgentHost}\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))",
+          "refId": "A"
+        }
+      ],
+      "title": "System Name",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
+      "id": 34,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"SystemLocation\")\r\n  |> filter(fn: (r) => r[\"agent_host\"] == \"${AgentHost}\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))",
+          "refId": "A"
+        }
+      ],
+      "title": "System Location",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "id": 33,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"SystemContact\")\r\n  |> filter(fn: (r) => r[\"agent_host\"] == \"${AgentHost}\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))",
+          "refId": "A"
+        }
+      ],
+      "title": "System Contact",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "timeticks"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "id": 36,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"UpTime\")\r\n  |> filter(fn: (r) => r[\"agent_host\"] == \"${AgentHost}\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))",
+          "refId": "A"
+        }
+      ],
+      "title": "Up Time",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
       "id": 4,
       "panels": [],
       "title": "Temperature status port",
@@ -101,7 +346,7 @@
         "h": 3,
         "w": 24,
         "x": 0,
-        "y": 1
+        "y": 9
       },
       "id": 25,
       "maxPerRow": 8,
@@ -162,7 +407,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 12
       },
       "id": 1,
       "maxPerRow": 8,
@@ -197,332 +442,332 @@
       "type": "stat"
     },
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 18
       },
       "id": 5,
-      "panels": [],
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 24,
+            "x": 0,
+            "y": 10
+          },
+          "id": 24,
+          "maxPerRow": 8,
+          "options": {
+            "colorMode": "none",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [],
+              "fields": "/.*/",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "10.1.5",
+          "repeat": "TempActivePort",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"agent_host\"] == \"${AgentHost}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^TempDescriptionPort${TempActivePort:regex}$/)\r\n  |> group()\r\n  |> distinct(column: \"_value\")",
+              "refId": "A"
+            }
+          ],
+          "title": ".",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "options": {
+                    "0": {
+                      "index": 0,
+                      "text": "noData"
+                    },
+                    "1": {
+                      "index": 1,
+                      "text": "noStatus"
+                    },
+                    "2": {
+                      "index": 2,
+                      "text": "normal"
+                    },
+                    "4": {
+                      "index": 3,
+                      "text": "highCritical"
+                    },
+                    "6": {
+                      "index": 4,
+                      "text": "lowCritical"
+                    },
+                    "7": {
+                      "index": 5,
+                      "text": "sensorError"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 24,
+            "x": 0,
+            "y": 13
+          },
+          "id": 2,
+          "maxPerRow": 8,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "10.1.5",
+          "repeat": "TempActivePort",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"agent_host\"] == \"${AgentHost}\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"TempStatusPort${TempActivePort}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")\r\n",
+              "refId": "A"
+            }
+          ],
+          "title": ".",
+          "type": "stat"
+        }
+      ],
       "title": "Temperature degree ports",
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_INFLUXDB}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 24,
-        "x": 0,
-        "y": 11
-      },
-      "id": 24,
-      "maxPerRow": 8,
-      "options": {
-        "colorMode": "none",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [],
-          "fields": "/.*/",
-          "values": true
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.1.5",
-      "repeat": "TempActivePort",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB}"
-          },
-          "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"agent_host\"] == \"${AgentHost}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^TempDescriptionPort${TempActivePort:regex}$/)\r\n  |> group()\r\n  |> distinct(column: \"_value\")",
-          "refId": "A"
-        }
-      ],
-      "title": ".",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_INFLUXDB}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "index": 0,
-                  "text": "noData"
-                },
-                "1": {
-                  "index": 1,
-                  "text": "noStatus"
-                },
-                "2": {
-                  "index": 2,
-                  "text": "normal"
-                },
-                "4": {
-                  "index": 3,
-                  "text": "highCritical"
-                },
-                "6": {
-                  "index": 4,
-                  "text": "lowCritical"
-                },
-                "7": {
-                  "index": 5,
-                  "text": "sensorError"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 24,
-        "x": 0,
-        "y": 14
-      },
-      "id": 2,
-      "maxPerRow": 8,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.1.5",
-      "repeat": "TempActivePort",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB}"
-          },
-          "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"agent_host\"] == \"${AgentHost}\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"TempStatusPort${TempActivePort}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")\r\n",
-          "refId": "A"
-        }
-      ],
-      "title": ".",
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 19
       },
       "id": 6,
-      "panels": [],
-      "title": "Liquid status port",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_INFLUXDB}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
-        "x": 0,
-        "y": 21
-      },
-      "id": 21,
-      "maxPerRow": 8,
-      "options": {
-        "colorMode": "none",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [],
-          "fields": "/.*/",
-          "values": true
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.1.5",
-      "repeat": "LiquidActivePort",
-      "repeatDirection": "h",
-      "targets": [
+      "panels": [
         {
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"agent_host\"] == \"${AgentHost}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^LiquidDescriptionPort${LiquidActivePort:regex}$/)\r\n  |> group()\r\n  |> distinct(column: \"_value\")",
-          "refId": "A"
-        }
-      ],
-      "title": ".",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_INFLUXDB}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "index": 0,
-                  "text": "noData"
-                },
-                "1": {
-                  "index": 1,
-                  "text": "noStatus"
-                },
-                "2": {
-                  "index": 2,
-                  "text": "normal"
-                },
-                "4": {
-                  "index": 3,
-                  "text": "highCritical"
-                },
-                "6": {
-                  "index": 4,
-                  "text": "lowCritical"
-                },
-                "7": {
-                  "index": 5,
-                  "text": "sensorError"
-                }
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
               },
-              "type": "value"
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 6,
+            "x": 0,
+            "y": 11
+          },
+          "id": 21,
+          "maxPerRow": 8,
+          "options": {
+            "colorMode": "none",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [],
+              "fields": "/.*/",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "10.1.5",
+          "repeat": "LiquidActivePort",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"agent_host\"] == \"${AgentHost}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^LiquidDescriptionPort${LiquidActivePort:regex}$/)\r\n  |> group()\r\n  |> distinct(column: \"_value\")",
+              "refId": "A"
             }
           ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          },
-          "unit": "none"
+          "title": ".",
+          "type": "stat"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 0,
-        "y": 24
-      },
-      "id": 3,
-      "maxPerRow": 8,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "10.1.5",
-      "repeat": "LiquidActivePort",
-      "repeatDirection": "h",
-      "targets": [
         {
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"agent_host\"] == \"${AgentHost}\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"LiquidStatusPort${LiquidActivePort}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")\r\n",
-          "refId": "A"
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "0": {
+                      "index": 0,
+                      "text": "noData"
+                    },
+                    "1": {
+                      "index": 1,
+                      "text": "noStatus"
+                    },
+                    "2": {
+                      "index": 2,
+                      "text": "normal"
+                    },
+                    "4": {
+                      "index": 3,
+                      "text": "highCritical"
+                    },
+                    "6": {
+                      "index": 4,
+                      "text": "lowCritical"
+                    },
+                    "7": {
+                      "index": 5,
+                      "text": "sensorError"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 6,
+            "x": 0,
+            "y": 14
+          },
+          "id": 3,
+          "maxPerRow": 8,
+          "options": {
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true
+          },
+          "pluginVersion": "10.1.5",
+          "repeat": "LiquidActivePort",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"agent_host\"] == \"${AgentHost}\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"LiquidStatusPort${LiquidActivePort}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")\r\n",
+              "refId": "A"
+            }
+          ],
+          "type": "gauge"
         }
       ],
-      "type": "gauge"
+      "title": "Liquid status port",
+      "type": "row"
     }
   ],
   "refresh": "",
@@ -537,14 +782,34 @@
           "type": "influxdb",
           "uid": "${DS_INFLUXDB}"
         },
-        "definition": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> keep(columns: [\"agent_host\"])\r\n  |> distinct(column: \"agent_host\")\r\n  |> group()",
+        "definition": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"SystemName\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))",
+        "hide": 0,
+        "includeAll": false,
+        "label": "System Name",
+        "multi": false,
+        "name": "SystemName",
+        "options": [],
+        "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"SystemName\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB}"
+        },
+        "definition": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"SystemName\")\r\n  |> filter(fn: (r) => r[\"_value\"] == \"${SystemName}\")\r\n  |> keep(columns: [\"agent_host\"])",
         "hide": 0,
         "includeAll": false,
         "label": "Agent Host",
         "multi": false,
         "name": "AgentHost",
         "options": [],
-        "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> keep(columns: [\"agent_host\"])\r\n  |> distinct(column: \"agent_host\")\r\n  |> group()",
+        "query": "from(bucket: \"warn\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"SystemName\")\r\n  |> filter(fn: (r) => r[\"_value\"] == \"${SystemName}\")\r\n  |> keep(columns: [\"agent_host\"])",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -601,6 +866,6 @@
   "timezone": "",
   "title": "Warnsystem AKCP",
   "uid": "b2ef3647-4611-4f22-9622-8fa8fd429718",
-  "version": 29,
+  "version": 34,
   "weekStart": ""
 }
