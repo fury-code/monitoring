@@ -19,4 +19,12 @@ The Collector also gathers OIDs for the water sensor, dry contact, security, mot
 sensorProbeSwitchStatus = 1.3.6.1.4.1.3854.1.2.2.1.18.1.3.X
 ```
 
+The Collector also gathers OIDs for genereall system information:
+```
+Up Time = 1.3.6.1.2.1.1.3.0
+System Contact = 1.3.6.1.2.1.1.4.0
+System Name = 1.3.6.1.2.1.1.5.0
+System Location = 1.3.6.1.2.1.1.6.0
+```
+
 You can find more information about the OIDs here: [Documentation](https://www.akcp.com/wp-content/uploads/2012/02/AKCP_OID_SNMP%20manual.pdf)
