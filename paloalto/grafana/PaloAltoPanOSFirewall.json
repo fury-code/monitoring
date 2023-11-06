@@ -21,7 +21,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.1.5"
+      "version": "10.2.0"
     },
     {
       "type": "datasource",
@@ -119,14 +119,14 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"uptime\")\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pan_system\")\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> map(fn: (r) => ({ r with _value: r._value / 8640000.0 }))\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"UpTime\")\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> map(fn: (r) => ({ r with _value: r._value / 8640000.0 }))\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
@@ -177,14 +177,14 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"pansysswversion\")\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))\r\n",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"PanSysSwVersion\")\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))\r\n",
           "refId": "A"
         }
       ],
@@ -235,14 +235,14 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"pantyp\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"PanTyp\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))",
           "refId": "A"
         }
       ],
@@ -293,14 +293,14 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"panSysHAState\")\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))\r\n",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"PanSysHaState\")\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))\r\n",
           "refId": "A"
         }
       ],
@@ -359,14 +359,14 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^ifDescr\\.${ActiveInterfaces:regex}$/)\r\n  |> last()\r\n  |> map(fn: (r) => ({_value: r._value}))",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfDescr\\.${ActiveInterfaces:regex}$/)\r\n  |> last()\r\n  |> map(fn: (r) => ({_value: r._value}))",
           "refId": "A"
         }
       ],
@@ -423,14 +423,14 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "import \"strings\"\r\n\r\nfrom(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^ifOperStatus\\./)\r\n  |> filter(fn: (r) => r[\"_value\"] == 1)\r\n  |> map(fn: (r) => ({\r\n       _field: strings.split(v: r._field, t: \".\")[1], // Hier wird der Teil nach dem \".\" extrahiert\r\n       // Weitere Felder beibehalten\r\n       _measurement: r._measurement,\r\n       _time: r._time,\r\n       _value: r._value,\r\n     }))\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._field }))\r\n",
+          "query": "import \"strings\"\r\n\r\nfrom(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfOperStatus\\./)\r\n  |> filter(fn: (r) => r[\"_value\"] == 1)\r\n  |> map(fn: (r) => ({\r\n       _field: strings.split(v: r._field, t: \".\")[1], // Hier wird der Teil nach dem \".\" extrahiert\r\n       // Weitere Felder beibehalten\r\n       _measurement: r._measurement,\r\n       _time: r._time,\r\n       _value: r._value,\r\n     }))\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._field }))\r\n",
           "refId": "A"
         }
       ],
@@ -474,6 +474,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -524,7 +525,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "hrProcessorLoad.1"
+              "options": "HrProcessorLoad.1"
             },
             "properties": [
               {
@@ -536,7 +537,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "hrProcessorLoad.2"
+              "options": "HrProcessorLoad.2"
             },
             "properties": [
               {
@@ -597,7 +598,7 @@
           "measurement": "pan_system",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pan_system\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /hrProcessorLoad\\.\\d+/)\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /HrProcessorLoad\\.\\d+/)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -659,7 +660,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "hrProcessorLoad.1"
+              "options": "HrProcessorLoad.1"
             },
             "properties": [
               {
@@ -671,7 +672,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "hrProcessorLoad.2"
+              "options": "HrProcessorLoad.2"
             },
             "properties": [
               {
@@ -694,6 +695,7 @@
         "displayMode": "lcd",
         "minVizHeight": 10,
         "minVizWidth": 0,
+        "namePlacement": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -705,7 +707,7 @@
         "showUnfilled": true,
         "valueMode": "color"
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "alias": "$tag_hostname DP",
@@ -736,7 +738,7 @@
           "measurement": "pan_system",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pan_system\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /hrProcessorLoad\\.\\d+/)\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /HrProcessorLoad\\.\\d+/)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -776,6 +778,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -929,7 +932,7 @@
           "measurement": "pan_system",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pan_system\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /fan\\d+/)\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /Fan\\d+/)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -964,6 +967,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1013,7 +1017,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "CP_temp"
+              "options": "CpTemp"
             },
             "properties": [
               {
@@ -1049,7 +1053,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pan_system\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"CP_temp\")\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"CpTemp\")\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")",
           "refId": "A"
         }
       ],
@@ -1093,6 +1097,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1154,7 +1159,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "panSessionActiveTcp"
+              "options": "PanSessionActiveTcp"
             },
             "properties": [
               {
@@ -1166,7 +1171,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "panSessionActiveUdp"
+              "options": "PanSessionActiveUdp"
             },
             "properties": [
               {
@@ -1203,7 +1208,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pan_system\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"panSessionActiveTcp\" or r[\"_field\"] == \"panSessionActiveUdp\" or r[\"_field\"] == \"panSessionActiveICMP\") \r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"PanSessionActiveTcp\" or r[\"_field\"] == \"PanSessionActiveUdp\" or r[\"_field\"] == \"PanSessionActiveICMP\") \r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")",
           "refId": "A"
         }
       ],
@@ -1234,6 +1239,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1284,7 +1290,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCInOctets.5 {agent_host=\"172.16.4.2\", cluster=\"cluster1\", host=\"f3a83a45ca99\", hostname=\"PA-220-EYZT\"}"
+              "options": "IfHcInOctets.5"
             },
             "properties": [
               {
@@ -1296,7 +1302,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCInOctets.6 {agent_host=\"172.16.4.2\", cluster=\"cluster1\", host=\"f3a83a45ca99\", hostname=\"PA-220-EYZT\"}"
+              "options": "IfHcInOctets.6"
             },
             "properties": [
               {
@@ -1308,7 +1314,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCInOctets.7 {agent_host=\"172.16.4.2\", cluster=\"cluster1\", host=\"f3a83a45ca99\", hostname=\"PA-220-EYZT\"}"
+              "options": "IfHcInOctets.7"
             },
             "properties": [
               {
@@ -1320,7 +1326,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCInOctets.1"
+              "options": "IfHcInOctets.1"
             },
             "properties": [
               {
@@ -1332,7 +1338,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCInOctets.24"
+              "options": "IfHcInOctets.24"
             },
             "properties": [
               {
@@ -1344,7 +1350,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCInOctets.25"
+              "options": "IfHcInOctets.25"
             },
             "properties": [
               {
@@ -1356,7 +1362,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCInOctets.26"
+              "options": "IfHcInOctets.26"
             },
             "properties": [
               {
@@ -1368,7 +1374,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCInOctets.4"
+              "options": "IfHcInOctets.4"
             },
             "properties": [
               {
@@ -1404,7 +1410,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^ifHCInOctets\\.${ActiveInterfaces:regex}$/)\r\n  |> map(fn: (r) => ({ r with _value: r._value / 8 }))  \r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> derivative(unit: 1m, nonNegative: false, columns: [\"_value\"])\r\n  |> yield(name: \"derivative\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfHcInOctets\\.${ActiveInterfaces:regex}$/)\r\n  |> map(fn: (r) => ({ r with _value: r._value / 8 }))  \r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> derivative(unit: 1m, nonNegative: false, columns: [\"_value\"])\r\n  |> yield(name: \"derivative\")",
           "refId": "A"
         }
       ],
@@ -1422,6 +1428,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1472,7 +1479,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCOutOctets.5 {agent_host=\"172.16.4.2\", cluster=\"cluster1\", host=\"f3a83a45ca99\", hostname=\"PA-220-EYZT\"}"
+              "options": "IfHcOutOctets.5"
             },
             "properties": [
               {
@@ -1484,7 +1491,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCOutOctets.6 {agent_host=\"172.16.4.2\", cluster=\"cluster1\", host=\"f3a83a45ca99\", hostname=\"PA-220-EYZT\"}"
+              "options": "IfHcOutOctets.6"
             },
             "properties": [
               {
@@ -1496,7 +1503,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCOutOctets.7 {agent_host=\"172.16.4.2\", cluster=\"cluster1\", host=\"f3a83a45ca99\", hostname=\"PA-220-EYZT\"}"
+              "options": "IfHcOutOctets.7"
             },
             "properties": [
               {
@@ -1508,7 +1515,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCOutOctets.1"
+              "options": "IfHcOutOctets.1"
             },
             "properties": [
               {
@@ -1520,7 +1527,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCOutOctets.24"
+              "options": "IfHcOutOctets.24"
             },
             "properties": [
               {
@@ -1532,7 +1539,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCOutOctets.25"
+              "options": "IfHcOutOctets.25"
             },
             "properties": [
               {
@@ -1544,7 +1551,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCOutOctets.26"
+              "options": "IfHcOutOctets.26"
             },
             "properties": [
               {
@@ -1556,7 +1563,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ifHCOutOctets.4"
+              "options": "IfHcOutOctets.4"
             },
             "properties": [
               {
@@ -1592,7 +1599,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^ifHCOutOctets\\.${ActiveInterfaces:regex}$/)\r\n  |> map(fn: (r) => ({ r with _value: r._value / 8 }))  \r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> derivative(unit: 1m, nonNegative: false, columns: [\"_value\"])\r\n  |> yield(name: \"derivative\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfHcOutOctets\\.${ActiveInterfaces:regex}$/)\r\n  |> map(fn: (r) => ({ r with _value: r._value / 8 }))  \r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> derivative(unit: 1m, nonNegative: false, columns: [\"_value\"])\r\n  |> yield(name: \"derivative\")",
           "refId": "A"
         }
       ],
@@ -1602,7 +1609,6 @@
   ],
   "refresh": "10s",
   "schemaVersion": 38,
-  "style": "dark",
   "tags": [],
   "templating": {
     "list": [
@@ -1612,13 +1618,14 @@
           "type": "influxdb",
           "uid": "${DS_INFLUXDB}"
         },
-        "definition": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> keep(columns: [\"hostname\"])\r\n  |> distinct(column: \"hostname\")\r\n  |> group()",
+        "definition": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> keep(columns: [\"Hostname\"])\r\n  |> distinct(column: \"Hostname\")\r\n  |> group()",
         "hide": 0,
         "includeAll": false,
+        "label": "Hostname",
         "multi": false,
         "name": "hostname",
         "options": [],
-        "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> keep(columns: [\"hostname\"])\r\n  |> distinct(column: \"hostname\")\r\n  |> group()",
+        "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> keep(columns: [\"Hostname\"])\r\n  |> distinct(column: \"Hostname\")\r\n  |> group()",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1634,14 +1641,14 @@
           "type": "influxdb",
           "uid": "${DS_INFLUXDB}"
         },
-        "definition": "import \"strings\"\r\n\r\nfrom(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^ifOperStatus\\./)\r\n  |> filter(fn: (r) => r[\"_value\"] == 1)\r\n  |> map(fn: (r) => ({\r\n       _field: strings.split(v: r._field, t: \".\")[1], // Hier wird der Teil nach dem \".\" extrahiert\r\n       // Weitere Felder beibehalten\r\n       _measurement: r._measurement,\r\n       _time: r._time,\r\n       _value: r._value,\r\n     }))\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._field }))\r\n",
+        "definition": "import \"strings\"\r\n\r\nfrom(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfOperStatus\\./)\r\n  |> filter(fn: (r) => r[\"_value\"] == 1)\r\n  |> map(fn: (r) => ({\r\n       _field: strings.split(v: r._field, t: \".\")[1], // Hier wird der Teil nach dem \".\" extrahiert\r\n       // Weitere Felder beibehalten\r\n       _measurement: r._measurement,\r\n       _time: r._time,\r\n       _value: r._value,\r\n     }))\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._field }))\r\n",
         "hide": 0,
         "includeAll": true,
         "label": "ActiveInterfaces",
         "multi": true,
         "name": "ActiveInterfaces",
         "options": [],
-        "query": "import \"strings\"\r\n\r\nfrom(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^ifOperStatus\\./)\r\n  |> filter(fn: (r) => r[\"_value\"] == 1)\r\n  |> map(fn: (r) => ({\r\n       _field: strings.split(v: r._field, t: \".\")[1], // Hier wird der Teil nach dem \".\" extrahiert\r\n       // Weitere Felder beibehalten\r\n       _measurement: r._measurement,\r\n       _time: r._time,\r\n       _value: r._value,\r\n     }))\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._field }))\r\n",
+        "query": "import \"strings\"\r\n\r\nfrom(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfOperStatus\\./)\r\n  |> filter(fn: (r) => r[\"_value\"] == 1)\r\n  |> map(fn: (r) => ({\r\n       _field: strings.split(v: r._field, t: \".\")[1], // Hier wird der Teil nach dem \".\" extrahiert\r\n       // Weitere Felder beibehalten\r\n       _measurement: r._measurement,\r\n       _time: r._time,\r\n       _value: r._value,\r\n     }))\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._field }))\r\n",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1651,7 +1658,7 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -1670,6 +1677,6 @@
   "timezone": "",
   "title": "PaloAlto PanOS Firewall",
   "uid": "qLLeD-JZ7",
-  "version": 4,
+  "version": 11,
   "weekStart": ""
 }
