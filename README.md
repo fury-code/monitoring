@@ -5,4 +5,4 @@ In this repository, you can find everything you need to build a monitoring syste
 - InfluxDB
 - Telegraf
 
-Within this repository, you can find metric collectors and dashboards to visualize your data. Test
+Within this repository, you can find metric collectors and dashboards to visualize your data.
