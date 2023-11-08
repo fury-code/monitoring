@@ -7,6 +7,14 @@
       "type": "datasource",
       "pluginId": "influxdb",
       "pluginName": "InfluxDB"
+    },
+    {
+      "name": "DS_PROMETHEUS-ONPREM",
+      "label": "prometheus-onprem",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
     }
   ],
   "__elements": {},
@@ -30,6 +38,12 @@
       "version": "1.0.0"
     },
     {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
       "type": "panel",
       "id": "stat",
       "name": "Stat",
@@ -39,6 +53,12 @@
       "type": "panel",
       "id": "table",
       "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
       "version": ""
     },
     {
@@ -70,7 +90,32 @@
   "gnetId": 11321,
   "graphTooltip": 0,
   "id": null,
-  "links": [],
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "Website",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://furycode.org/"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "Git",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://github.com/fury-code"
+    }
+  ],
   "liveNow": false,
   "panels": [
     {
@@ -131,6 +176,7 @@
         }
       ],
       "title": "Up Time",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -189,6 +235,7 @@
         }
       ],
       "title": "Version",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -247,6 +294,7 @@
         }
       ],
       "title": "Typ",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -305,6 +353,7 @@
         }
       ],
       "title": "HA State",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -371,6 +420,7 @@
         }
       ],
       "title": "Active Interface",
+      "transparent": true,
       "type": "table"
     },
     {
@@ -435,6 +485,7 @@
         }
       ],
       "title": "Active Interface",
+      "transparent": true,
       "type": "table"
     },
     {
@@ -471,6 +522,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "fixedColor": "#cc1840",
             "mode": "palette-classic"
           },
           "custom": {
@@ -626,6 +678,7 @@
         }
       ],
       "title": "CPU Usage",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -637,6 +690,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "fixedColor": "#ffac11",
             "mode": "palette-classic"
           },
           "mappings": [],
@@ -647,10 +701,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -765,6 +815,7 @@
         }
       ],
       "title": "Live Cluster CPU Load",
+      "transparent": true,
       "type": "bargauge"
     },
     {
@@ -954,6 +1005,7 @@
         }
       ],
       "title": "Fan RPM Counters",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -1058,6 +1110,7 @@
         }
       ],
       "title": "CPU Temperature",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -1094,6 +1147,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "fixedColor": "orange",
             "mode": "palette-classic"
           },
           "custom": {
@@ -1213,6 +1267,7 @@
         }
       ],
       "title": "Active Session",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -1275,8 +1330,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1382,6 +1436,31 @@
                 "value": "mgmt"
               }
             ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "ethernet1/22",
+                  "ethernet1/21"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
           }
         ]
       },
@@ -1415,6 +1494,7 @@
         }
       ],
       "title": "Traffic in",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -1464,8 +1544,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1604,7 +1683,33 @@
         }
       ],
       "title": "Traffic out",
+      "transparent": true,
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS-ONPREM}"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 41
+      },
+      "id": 78,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<div style=\"text-align: right;\">\n    <a href=\"https://furycode.org/\">\n        <img src=\"https://furycode.org/static/frontend/img/fc_no_background.png\" height=\"80\" alt=\"Flame\">\n    </a>\n</div>\n",
+        "mode": "markdown"
+      },
+      "pluginVersion": "10.2.0",
+      "transparent": true,
+      "type": "text"
     }
   ],
   "refresh": "10s",
@@ -1658,7 +1763,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
@@ -1676,7 +1781,7 @@
   },
   "timezone": "",
   "title": "PaloAlto PanOS Firewall",
-  "uid": "qLLeD-JZ7",
-  "version": 11,
+  "uid": "4269420",
+  "version": 10,
   "weekStart": ""
 }
