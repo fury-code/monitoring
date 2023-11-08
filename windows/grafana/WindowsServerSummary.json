@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.1.5"
+      "version": "10.2.0"
     },
     {
       "type": "datasource",
@@ -33,6 +33,12 @@
       "type": "panel",
       "id": "table",
       "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
       "version": ""
     }
   ],
@@ -58,13 +64,38 @@
       }
     ]
   },
-  "description": "Windows Server Status using Prometheus and windows_exporter",
+  "description": "",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "gnetId": 18658,
   "graphTooltip": 0,
   "id": null,
-  "links": [],
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "Website",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://furycode.org/"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "Git",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://github.com/fury-code"
+    }
+  ],
   "liveNow": false,
   "panels": [
     {
@@ -123,7 +154,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.0",
       "repeat": "Domain",
       "repeatDirection": "h",
       "targets": [
@@ -141,6 +172,7 @@
         }
       ],
       "title": "Total Server $Domain",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -199,7 +231,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.0",
       "repeat": "WindowsVersion",
       "repeatDirection": "h",
       "targets": [
@@ -217,6 +249,7 @@
         }
       ],
       "title": "Total $WindowsVersion",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -566,7 +599,7 @@
           }
         ]
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "aggregation": "Last",
@@ -827,13 +860,38 @@
           }
         }
       ],
+      "transparent": true,
       "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS-ONPREM}"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
+      "id": 76,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<div style=\"text-align: right;\">\n    <a href=\"https://furycode.org/\">\n        <img src=\"https://furycode.org/static/frontend/img/fc_no_background.png\" height=\"80\" alt=\"Flame\">\n    </a>\n</div>",
+        "mode": "html"
+      },
+      "pluginVersion": "10.2.0",
+      "transparent": true,
+      "type": "text"
     }
   ],
   "refresh": "5m",
   "revision": 1,
   "schemaVersion": 38,
-  "style": "dark",
   "tags": [],
   "templating": {
     "list": [
@@ -869,6 +927,7 @@
         "definition": "label_values(windows_os_info,product)",
         "hide": 0,
         "includeAll": true,
+        "label": "Windows Version",
         "multi": true,
         "name": "WindowsVersion",
         "options": [],
@@ -905,6 +964,6 @@
   "timezone": "",
   "title": "Windows Server Summary",
   "uid": "4269",
-  "version": 11,
+  "version": 16,
   "weekStart": ""
 }
