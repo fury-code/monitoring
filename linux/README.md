@@ -6,8 +6,5 @@ Once you import the Windows Server Overview Dashboard, it should appear as shown
 ## Linux Server Summary
 ![Dashboard](/linux/pictures/LinuxServerSummary1.png)
 
-# Setting Up the Environment
-If you don't already have a Prometheus and Grafana instance, you can follow these instructions: **Insert Instructions Here**
-
 # Additional Information about the Prometheus Collector
 To collect the data displayed in the dashboard, we utilized the Prometheus node_exporter. You can find more information about the node_exporter: [Exporter](https://github.com/prometheus/node_exporter)

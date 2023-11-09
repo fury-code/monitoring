@@ -3,10 +3,6 @@ Once you import the AKCP Dashboard, it should appear as shown below (some data h
 ![Dashboard](/akcp/pictures/WarnsystemAKCP1.png)
 ![Dashboard](/akcp/pictures/WarnsystemAKCP2.png)
 
-
-# Setting Up the Environment
-If you don't already have a Telegraf, InfluxDB, and Grafana instance, you can follow these instructions: Insert Instructions Here
-
 # Additional Information about the Telegraf Collector
 The Telegraf Collector collects the following OIDs for Temperature Metrics:
 ```
