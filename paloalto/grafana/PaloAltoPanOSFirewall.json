@@ -7,14 +7,6 @@
       "type": "datasource",
       "pluginId": "influxdb",
       "pluginName": "InfluxDB"
-    },
-    {
-      "name": "DS_PROMETHEUS-ONPREM",
-      "label": "prometheus-onprem",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
     }
   ],
   "__elements": {},
@@ -38,12 +30,6 @@
       "version": "1.0.0"
     },
     {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
       "type": "panel",
       "id": "stat",
       "name": "Stat",
@@ -53,12 +39,6 @@
       "type": "panel",
       "id": "table",
       "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "text",
-      "name": "Text",
       "version": ""
     },
     {
@@ -84,7 +64,7 @@
       }
     ]
   },
-  "description": "Complete Dashboard for PaloAlto Firewalls. ",
+  "description": "Dashboard for PaloAlto Firewalls",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "gnetId": 11321,
@@ -171,7 +151,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"UpTime\")\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> map(fn: (r) => ({ r with _value: r._value / 8640000.0 }))\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"UpTime\")\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> map(fn: (r) => ({ r with _value: r._value / 8640000.0 }))\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
@@ -230,7 +210,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"PanSysSwVersion\")\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))\r\n",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"PanSysSwVersion\")\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))\r\n",
           "refId": "A"
         }
       ],
@@ -289,7 +269,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"PanTyp\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"PanTyp\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))",
           "refId": "A"
         }
       ],
@@ -348,7 +328,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"PanSysHaState\")\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))\r\n",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"PanSysHaState\")\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._value }))\r\n",
           "refId": "A"
         }
       ],
@@ -415,7 +395,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfDescr\\.${ActiveInterfaces:regex}$/)\r\n  |> last()\r\n  |> map(fn: (r) => ({_value: r._value}))",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfDescr\\.${ActiveInterfaces:regex}$/)\r\n  |> last()\r\n  |> map(fn: (r) => ({_value: r._value}))",
           "refId": "A"
         }
       ],
@@ -480,7 +460,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "import \"strings\"\r\n\r\nfrom(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfOperStatus\\./)\r\n  |> filter(fn: (r) => r[\"_value\"] == 1)\r\n  |> map(fn: (r) => ({\r\n       _field: strings.split(v: r._field, t: \".\")[1], // Hier wird der Teil nach dem \".\" extrahiert\r\n       // Weitere Felder beibehalten\r\n       _measurement: r._measurement,\r\n       _time: r._time,\r\n       _value: r._value,\r\n     }))\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._field }))\r\n",
+          "query": "import \"strings\"\r\n\r\nfrom(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfOperStatus\\./)\r\n  |> filter(fn: (r) => r[\"_value\"] == 1)\r\n  |> map(fn: (r) => ({\r\n       _field: strings.split(v: r._field, t: \".\")[1], // Hier wird der Teil nach dem \".\" extrahiert\r\n       // Weitere Felder beibehalten\r\n       _measurement: r._measurement,\r\n       _time: r._time,\r\n       _value: r._value,\r\n     }))\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._field }))\r\n",
           "refId": "A"
         }
       ],
@@ -650,7 +630,7 @@
           "measurement": "pan_system",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /HrProcessorLoad\\.\\d+/)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /HrProcessorLoad\\.\\d+/)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -788,7 +768,7 @@
           "measurement": "pan_system",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /HrProcessorLoad\\.\\d+/)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /HrProcessorLoad\\.\\d+/)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -983,7 +963,7 @@
           "measurement": "pan_system",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /Fan\\d+/)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /Fan\\d+/)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1105,7 +1085,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"CpTemp\")\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"CpTemp\")\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")",
           "refId": "A"
         }
       ],
@@ -1262,7 +1242,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"PanSessionActiveTcp\" or r[\"_field\"] == \"PanSessionActiveUdp\" or r[\"_field\"] == \"PanSessionActiveICMP\") \r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PanSystem\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"PanSessionActiveTcp\" or r[\"_field\"] == \"PanSessionActiveUdp\" or r[\"_field\"] == \"PanSessionActiveICMP\") \r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")",
           "refId": "A"
         }
       ],
@@ -1330,7 +1310,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1489,7 +1470,7 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfHcInOctets\\.${ActiveInterfaces:regex}$/)\r\n  |> map(fn: (r) => ({ r with _value: r._value / 8 }))  \r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> derivative(unit: 1m, nonNegative: false, columns: [\"_value\"])\r\n  |> yield(name: \"derivative\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfHcInOctets\\.${ActiveInterfaces:regex}$/)\r\n  |> map(fn: (r) => ({ r with _value: r._value / 8 }))  \r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> derivative(unit: 1m, nonNegative: false, columns: [\"_value\"])\r\n  |> yield(name: \"derivative\")",
           "refId": "A"
         }
       ],
@@ -1544,7 +1525,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1678,38 +1660,13 @@
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
           },
-          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfHcOutOctets\\.${ActiveInterfaces:regex}$/)\r\n  |> map(fn: (r) => ({ r with _value: r._value / 8 }))  \r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> derivative(unit: 1m, nonNegative: false, columns: [\"_value\"])\r\n  |> yield(name: \"derivative\")",
+          "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfHcOutOctets\\.${ActiveInterfaces:regex}$/)\r\n  |> map(fn: (r) => ({ r with _value: r._value / 8 }))  \r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> derivative(unit: 1m, nonNegative: false, columns: [\"_value\"])\r\n  |> yield(name: \"derivative\")",
           "refId": "A"
         }
       ],
       "title": "Traffic out",
       "transparent": true,
       "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS-ONPREM}"
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 24,
-        "x": 0,
-        "y": 41
-      },
-      "id": 78,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "<div style=\"text-align: right;\">\n    <a href=\"https://furycode.org/\">\n        <img src=\"https://furycode.org/static/frontend/img/fc_no_background.png\" height=\"80\" alt=\"Flame\">\n    </a>\n</div>\n",
-        "mode": "markdown"
-      },
-      "pluginVersion": "10.2.0",
-      "transparent": true,
-      "type": "text"
     }
   ],
   "refresh": "10s",
@@ -1728,7 +1685,7 @@
         "includeAll": false,
         "label": "Hostname",
         "multi": false,
-        "name": "hostname",
+        "name": "Hostname",
         "options": [],
         "query": "from(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> keep(columns: [\"Hostname\"])\r\n  |> distinct(column: \"Hostname\")\r\n  |> group()",
         "refresh": 1,
@@ -1746,14 +1703,14 @@
           "type": "influxdb",
           "uid": "${DS_INFLUXDB}"
         },
-        "definition": "import \"strings\"\r\n\r\nfrom(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfOperStatus\\./)\r\n  |> filter(fn: (r) => r[\"_value\"] == 1)\r\n  |> map(fn: (r) => ({\r\n       _field: strings.split(v: r._field, t: \".\")[1], // Hier wird der Teil nach dem \".\" extrahiert\r\n       // Weitere Felder beibehalten\r\n       _measurement: r._measurement,\r\n       _time: r._time,\r\n       _value: r._value,\r\n     }))\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._field }))\r\n",
+        "definition": "import \"strings\"\r\n\r\nfrom(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfOperStatus\\./)\r\n  |> filter(fn: (r) => r[\"_value\"] == 1)\r\n  |> map(fn: (r) => ({\r\n       _field: strings.split(v: r._field, t: \".\")[1], // Hier wird der Teil nach dem \".\" extrahiert\r\n       // Weitere Felder beibehalten\r\n       _measurement: r._measurement,\r\n       _time: r._time,\r\n       _value: r._value,\r\n     }))\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._field }))\r\n",
         "hide": 0,
         "includeAll": true,
         "label": "ActiveInterfaces",
         "multi": true,
         "name": "ActiveInterfaces",
         "options": [],
-        "query": "import \"strings\"\r\n\r\nfrom(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfOperStatus\\./)\r\n  |> filter(fn: (r) => r[\"_value\"] == 1)\r\n  |> map(fn: (r) => ({\r\n       _field: strings.split(v: r._field, t: \".\")[1], // Hier wird der Teil nach dem \".\" extrahiert\r\n       // Weitere Felder beibehalten\r\n       _measurement: r._measurement,\r\n       _time: r._time,\r\n       _value: r._value,\r\n     }))\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._field }))\r\n",
+        "query": "import \"strings\"\r\n\r\nfrom(bucket: \"panos\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"Hostname\"] == \"${Hostname}\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^IfOperStatus\\./)\r\n  |> filter(fn: (r) => r[\"_value\"] == 1)\r\n  |> map(fn: (r) => ({\r\n       _field: strings.split(v: r._field, t: \".\")[1], // Hier wird der Teil nach dem \".\" extrahiert\r\n       // Weitere Felder beibehalten\r\n       _measurement: r._measurement,\r\n       _time: r._time,\r\n       _value: r._value,\r\n     }))\r\n  |> last()\r\n  |> map(fn: (r) => ({ value: r._field }))\r\n",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1763,7 +1720,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -1781,7 +1738,7 @@
   },
   "timezone": "",
   "title": "PaloAlto PanOS Firewall",
-  "uid": "4269420",
-  "version": 10,
+  "uid": "4269420321",
+  "version": 7,
   "weekStart": ""
 }
