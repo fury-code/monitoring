@@ -1063,7 +1063,7 @@
           "refId": "A"
         }
       ],
-      "title": "Disk (Free)",
+      "title": "Disk Free",
       "transparent": true,
       "type": "timeseries"
     },
@@ -1105,7 +1105,7 @@
           "type": "prometheus",
           "uid": "${DS_PROMETHEUS-ONPREM}"
         },
-        "definition": "label_values(node_uname_info{job=\"Linux\"},instance)",
+        "definition": "label_values(node_uname_info,instance)",
         "hide": 0,
         "includeAll": false,
         "label": "Hostname",
@@ -1113,7 +1113,8 @@
         "name": "Hostname",
         "options": [],
         "query": {
-          "query": "label_values(node_uname_info{job=\"Linux\"},instance)",
+          "qryType": 1,
+          "query": "label_values(node_uname_info,instance)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -1132,6 +1133,6 @@
   "timezone": "",
   "title": "Linux Server Overview",
   "uid": "6942069420",
-  "version": 25,
+  "version": 27,
   "weekStart": ""
 }
