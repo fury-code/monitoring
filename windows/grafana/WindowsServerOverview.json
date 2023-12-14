@@ -1179,7 +1179,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1275,7 +1276,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1384,7 +1386,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1424,7 +1427,7 @@
           "editorMode": "code",
           "expr": "windows_logical_disk_free_bytes{volume!~\"HarddiskVolume.*\", instance=~\"$Hostname\"}",
           "instant": false,
-          "legendFormat": "{{instance}}",
+          "legendFormat": "{{volume}}",
           "range": true,
           "refId": "A"
         }
@@ -1480,7 +1483,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1520,7 +1524,7 @@
           "editorMode": "code",
           "expr": "100-(windows_logical_disk_free_bytes{volume!~\"HarddiskVolume.*\", instance=~\"$Hostname\"} / windows_logical_disk_size_bytes{volume!~\"HarddiskVolume.*\", instance=~\"$Hostname\"})*100",
           "instant": false,
-          "legendFormat": "{{instance}}",
+          "legendFormat": "{{volume}}",
           "range": true,
           "refId": "A"
         }
@@ -1634,13 +1638,13 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Windows Server Overview",
   "uid": "6942069",
-  "version": 12,
+  "version": 13,
   "weekStart": ""
 }
