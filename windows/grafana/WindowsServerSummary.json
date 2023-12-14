@@ -339,11 +339,11 @@
                   "mode": "absolute",
                   "steps": [
                     {
-                      "color": "rgba(245, 54, 54, 0.9)",
+                      "color": "red",
                       "value": null
                     },
                     {
-                      "color": "#1F60C4",
+                      "color": "blue",
                       "value": 1
                     }
                   ]
@@ -385,15 +385,15 @@
                   "mode": "absolute",
                   "steps": [
                     {
-                      "color": "rgba(50, 172, 45, 0.97)",
+                      "color": "green",
                       "value": null
                     },
                     {
-                      "color": "rgba(237, 129, 40, 0.89)",
+                      "color": "yellow",
                       "value": 70
                     },
                     {
-                      "color": "rgba(245, 54, 54, 0.9)",
+                      "color": "red",
                       "value": 90
                     }
                   ]
@@ -435,15 +435,15 @@
                   "mode": "absolute",
                   "steps": [
                     {
-                      "color": "rgba(50, 172, 45, 0.97)",
+                      "color": "green",
                       "value": null
                     },
                     {
-                      "color": "rgba(237, 129, 40, 0.89)",
+                      "color": "yellow",
                       "value": 70
                     },
                     {
-                      "color": "rgba(245, 54, 54, 0.9)",
+                      "color": "red",
                       "value": 90
                     }
                   ]
@@ -492,7 +492,7 @@
                       "value": null
                     },
                     {
-                      "color": "#EAB839",
+                      "color": "yellow",
                       "value": 70
                     },
                     {
@@ -542,7 +542,7 @@
                       "value": null
                     },
                     {
-                      "color": "#EAB839",
+                      "color": "yellow",
                       "value": 70
                     },
                     {
@@ -964,6 +964,6 @@
   "timezone": "",
   "title": "Windows Server Summary",
   "uid": "4269",
-  "version": 16,
+  "version": 17,
   "weekStart": ""
 }
