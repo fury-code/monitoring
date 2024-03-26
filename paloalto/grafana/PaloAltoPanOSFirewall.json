@@ -7,6 +7,14 @@
       "type": "datasource",
       "pluginId": "influxdb",
       "pluginName": "InfluxDB"
+    },
+    {
+      "name": "DS_PROMETHEUS-ONPREM",
+      "label": "prometheus-onprem",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
     }
   ],
   "__elements": {},
@@ -21,12 +29,18 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.2.0"
+      "version": "10.3.1"
     },
     {
       "type": "datasource",
       "id": "influxdb",
       "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
       "version": "1.0.0"
     },
     {
@@ -39,6 +53,12 @@
       "type": "panel",
       "id": "table",
       "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
       "version": ""
     },
     {
@@ -119,7 +139,8 @@
               }
             ]
           },
-          "unit": "day"
+          "unit": "day",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -142,9 +163,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -180,7 +203,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -201,9 +225,11 @@
           "fields": "/.*/",
           "values": true
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -239,7 +265,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -260,9 +287,11 @@
           "fields": "/.*/",
           "values": true
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -298,7 +327,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -319,9 +349,11 @@
           "fields": "/.*/",
           "values": true
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -363,7 +395,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": []
       },
@@ -388,7 +421,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -430,7 +463,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": []
       },
@@ -453,7 +487,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -551,7 +585,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -684,7 +719,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -723,6 +759,7 @@
       "links": [],
       "options": {
         "displayMode": "lcd",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "auto",
@@ -735,9 +772,10 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "$tag_hostname DP",
@@ -855,7 +893,8 @@
               }
             ]
           },
-          "unit": "rpm"
+          "unit": "rpm",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -1062,15 +1101,15 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -1205,8 +1244,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1214,7 +1252,8 @@
               }
             ]
           },
-          "unit": "Bps"
+          "unit": "Bps",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -1420,8 +1459,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1429,7 +1467,8 @@
               }
             ]
           },
-          "unit": "Bps"
+          "unit": "Bps",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -1562,10 +1601,35 @@
       "title": "Traffic out",
       "transparent": true,
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS-ONPREM}"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 41
+      },
+      "id": 78,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<div style=\"text-align: right;\">\n    <a href=\"https://furycode.org/\">\n        <img src=\"https://www.furycode.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fflame.26b9b203.png&w=640&q=75\" height=\"80\" alt=\"Flame\">\n    </a>\n</div>\n",
+        "mode": "markdown"
+      },
+      "pluginVersion": "10.3.1",
+      "transparent": true,
+      "type": "text"
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 38,
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
@@ -1615,7 +1679,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -1634,6 +1698,6 @@
   "timezone": "",
   "title": "PaloAlto PanOS Firewall",
   "uid": "4269420321",
-  "version": 8,
+  "version": 9,
   "weekStart": ""
 }
