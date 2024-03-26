@@ -27,7 +27,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.2.0"
+      "version": "10.3.1"
     },
     {
       "type": "datasource",
@@ -164,7 +164,8 @@
                 "value": 1
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": []
       },
@@ -177,6 +178,7 @@
       "id": 12,
       "options": {
         "displayMode": "basic",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "auto",
@@ -189,9 +191,10 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -235,7 +238,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -258,9 +262,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -304,7 +309,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -327,9 +333,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -377,7 +384,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -390,6 +398,7 @@
       "id": 14,
       "options": {
         "displayMode": "lcd",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "auto",
@@ -402,9 +411,10 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -459,7 +469,8 @@
                 "value": 1
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -558,9 +569,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -598,7 +611,8 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "s",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -621,9 +635,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -661,7 +677,8 @@
               }
             ]
           },
-          "unit": "GHZ"
+          "unit": "GHZ",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -684,9 +701,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -724,7 +743,8 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "bytes",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -747,9 +767,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -795,7 +817,8 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "bytes",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -818,9 +841,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -893,7 +918,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -1079,7 +1105,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -1179,8 +1206,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1276,8 +1302,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1386,8 +1411,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1483,8 +1507,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1551,17 +1574,17 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "<div style=\"text-align: right;\">\n    <a href=\"https://furycode.org/\">\n        <img src=\"https://furycode.org/static/frontend/img/fc_no_background.png\" height=\"80\" alt=\"Flame\">\n    </a>\n</div>",
+        "content": "<div style=\"text-align: right;\">\n    <a href=\"https://furycode.org/\">\n        <img src=\"https://www.furycode.org/_next/image?url=/_next/static/media/flame.26b9b203.png&w=1080&q=75\" height=\"80\" alt=\"Flame\">\n    </a>\n</div>",
         "mode": "html"
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.2.3",
       "transparent": true,
       "type": "text"
     }
   ],
   "refresh": "5s",
   "revision": 1,
-  "schemaVersion": 38,
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
@@ -1645,6 +1668,6 @@
   "timezone": "",
   "title": "Windows Server Overview",
   "uid": "6942069",
-  "version": 13,
+  "version": 14,
   "weekStart": ""
 }
