@@ -27,7 +27,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.2.0"
+      "version": "10.3.1"
     },
     {
       "type": "datasource",
@@ -76,8 +76,10 @@
       }
     ]
   },
+  "description": "Linux Server Overview",
   "editable": true,
   "fiscalYearStartMonth": 0,
+  "gnetId": 19937,
   "graphTooltip": 0,
   "id": null,
   "links": [
@@ -164,7 +166,8 @@
                 "value": 1
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": []
       },
@@ -177,6 +180,7 @@
       "id": 12,
       "options": {
         "displayMode": "basic",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "auto",
@@ -189,9 +193,10 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -235,7 +240,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -258,9 +264,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -304,7 +311,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -327,9 +335,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -379,7 +388,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -392,6 +402,7 @@
       "id": 14,
       "options": {
         "displayMode": "lcd",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "auto",
@@ -404,9 +415,10 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -444,7 +456,8 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "s",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -467,9 +480,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -507,7 +522,8 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "none",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -530,9 +546,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -570,7 +588,8 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "bytes",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -593,9 +612,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -641,7 +662,8 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "bytes",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -664,9 +686,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
@@ -674,7 +698,7 @@
             "uid": "${DS_PROMETHEUS-ONPREM}"
           },
           "editorMode": "code",
-          "expr": "node_filesystem_free_bytes{instance=~\"$Hostname\",fstype!~\"(tmpfs|rootfs)\", mountpoint=~\"/\"}",
+          "expr": "node_filesystem_free_bytes{instance=~\"$Hostname\",fstype!~\"(tmpfs|rootfs)\", mountpoint!=\"/boot/efi\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -755,7 +779,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -875,7 +900,8 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "bytes",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -1019,7 +1045,8 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "bytes",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -1085,17 +1112,17 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "<div style=\"text-align: right;\">\n    <a href=\"https://furycode.org/\">\n        <img src=\"https://furycode.org/static/frontend/img/fc_no_background.png\" height=\"80\" alt=\"Flame\">\n    </a>\n</div>\n",
+        "content": "<div style=\"text-align: right;\">\n    <a href=\"https://furycode.org/\">\n        <img src=\"https://www.furycode.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fflame.26b9b203.png&w=640&q=75\" height=\"80\" alt=\"Flame\">\n    </a>\n</div>\n",
         "mode": "markdown"
       },
-      "pluginVersion": "10.2.0",
+      "pluginVersion": "10.3.1",
       "transparent": true,
       "type": "text"
     }
   ],
-  "refresh": "5s",
+  "refresh": "",
   "revision": 1,
-  "schemaVersion": 38,
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
@@ -1132,7 +1159,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "Linux Server Overview",
-  "uid": "6942069420",
-  "version": 27,
+  "uid": "6942069420asd",
+  "version": 4,
   "weekStart": ""
 }
