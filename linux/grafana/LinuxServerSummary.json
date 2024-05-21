@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.3.1"
+      "version": "11.0.0"
     },
     {
       "type": "datasource",
@@ -128,8 +128,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": []
       },
@@ -157,7 +156,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.3.1",
+      "pluginVersion": "11.0.0",
       "repeat": "LinuxVersion",
       "repeatDirection": "h",
       "targets": [
@@ -222,8 +221,7 @@
                 "value": 80
               }
             ]
-          },
-          "unitScale": true
+          }
         },
         "overrides": [
           {
@@ -312,15 +310,15 @@
                   "mode": "absolute",
                   "steps": [
                     {
-                      "color": "rgba(50, 172, 45, 0.97)",
+                      "color": "green",
                       "value": null
                     },
                     {
-                      "color": "rgba(237, 129, 40, 0.89)",
+                      "color": "yellow",
                       "value": 70
                     },
                     {
-                      "color": "rgba(245, 54, 54, 0.9)",
+                      "color": "red",
                       "value": 90
                     }
                   ]
@@ -362,15 +360,15 @@
                   "mode": "absolute",
                   "steps": [
                     {
-                      "color": "rgba(50, 172, 45, 0.97)",
+                      "color": "green",
                       "value": null
                     },
                     {
-                      "color": "rgba(237, 129, 40, 0.89)",
+                      "color": "yellow",
                       "value": 70
                     },
                     {
-                      "color": "rgba(245, 54, 54, 0.9)",
+                      "color": "red",
                       "value": 90
                     }
                   ]
@@ -419,7 +417,7 @@
                       "value": null
                     },
                     {
-                      "color": "#EAB839",
+                      "color": "yellow",
                       "value": 70
                     },
                     {
@@ -445,7 +443,6 @@
       },
       "id": 79,
       "interval": "1m",
-      "links": [],
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -464,7 +461,7 @@
           }
         ]
       },
-      "pluginVersion": "10.3.1",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -629,10 +626,10 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "<div style=\"text-align: right;\">\n    <a href=\"https://furycode.org/\">\n        <img src=\"https://www.furycode.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fflame.26b9b203.png&w=640&q=75\" height=\"80\" alt=\"Flame\">\n    </a>\n</div>\n",
+        "content": "<div style=\"text-align: right;\">\n    <a href=\"https://furycode.org/\">\n        <img src=\"https://furycode.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fflame.26b9b203.png&w=640&q=75\" height=\"80\" alt=\"Flame\">\n    </a>\n</div>\n",
         "mode": "markdown"
       },
-      "pluginVersion": "10.3.1",
+      "pluginVersion": "11.0.0",
       "transparent": true,
       "type": "text"
     }
@@ -672,6 +669,7 @@
     "from": "now-6h",
     "to": "now"
   },
+  "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {
     "refresh_intervals": [
       "5s",
@@ -689,6 +687,6 @@
   "timezone": "",
   "title": "Linux Server Summary",
   "uid": "426942",
-  "version": 14,
+  "version": 18,
   "weekStart": ""
 }
