@@ -1,0 +1,3070 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "influxdb",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "11.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 12,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "dtdurationms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 0,
+            "y": 1
+          },
+          "id": 1,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"uptime\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Up Time",
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "left",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": false,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 100
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Place"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 100
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 20,
+            "x": 4,
+            "y": 1
+          },
+          "id": 28,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "enablePagination": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"snmp\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Name\" or r[\"_field\"] == \"Place\" or r[\"_field\"] == \"Os\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> group(columns: [\"agent_host\"], mode:\"by\")\n  |> last(column: \"_time\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Inventar",
+          "transformations": [
+            {
+              "id": "merge",
+              "options": {}
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "_measurement": true,
+                  "_start": true,
+                  "_stop": true,
+                  "_time": true,
+                  "host": true,
+                  "source": true
+                },
+                "includeByName": {},
+                "indexByName": {
+                  "Name": 6,
+                  "Os": 8,
+                  "Place": 7,
+                  "_measurement": 3,
+                  "_start": 0,
+                  "_stop": 1,
+                  "_time": 2,
+                  "host": 4,
+                  "source": 5
+                },
+                "renameByName": {}
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 0,
+            "y": 9
+          },
+          "id": 5,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"PSU_Status\")\n  |> last(column: \"_value\")\n  |> group()\n  |> count()",
+              "refId": "A"
+            }
+          ],
+          "title": "Power Supply Total",
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "left",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "1": {
+                      "color": "red",
+                      "index": 1,
+                      "text": "Offline"
+                    },
+                    "2": {
+                      "color": "green",
+                      "index": 0,
+                      "text": "Online"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "transparent",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 4,
+            "y": 9
+          },
+          "id": 7,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"PSU_Status\")\n  |> last()\n  |> map(fn: (r) => ({ r with Index: r.index }))\n  |> keep(columns: [\"_value\", \"Index\", \"source\"])",
+              "refId": "A"
+            }
+          ],
+          "title": "Power Supply Satus",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "includeByName": {},
+                "indexByName": {
+                  "Index nx-rz2-21": 0,
+                  "_value nx-rz2-21": 1
+                },
+                "renameByName": {
+                  "Index nx-rz2-21": "Index",
+                  "_value nx-rz2-21": "Status"
+                }
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "left",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "1": {
+                      "index": 1,
+                      "text": "Offline"
+                    },
+                    "2": {
+                      "index": 0,
+                      "text": "Online"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 12,
+            "y": 9
+          },
+          "id": 16,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"FAN_Status\")\n  |> last()\n  |> map(fn: (r) => ({ r with Index: r.index }))\n  |> keep(columns: [\"_value\", \"Index\", \"source\"])",
+              "refId": "A"
+            }
+          ],
+          "title": "Fan Satus",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "includeByName": {},
+                "indexByName": {
+                  "Index nx-rz2-21": 0,
+                  "_value nx-rz2-21": 1
+                },
+                "renameByName": {
+                  "Index nx-rz2-21": "Index",
+                  "_value nx-rz2-21": "Status"
+                }
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 20,
+            "y": 9
+          },
+          "id": 15,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"FAN_Status\")\n  |> last(column: \"_value\")\n  |> group()\n  |> count()",
+              "refId": "A"
+            }
+          ],
+          "title": "Fan Total",
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "celsius"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 17
+          },
+          "id": 35,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "typ = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorType\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n\nvalue = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorValue\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n\nname = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorName\")\n  |> filter(fn: (r) => r[\"agent_host\"] == \"172.19.0.47\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n\nprecision = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorPrecision\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n\nscale = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorScale\")\n  |> filter(fn: (r) => r[\"agent_host\"] == \"172.19.0.47\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n\nstatus = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorStatus\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n\njoin1 = join(\n  tables: {typ: typ, value: value},\n  on: [\"_time\", \"index\"]\n)\n\njoin2 = join(\n  tables: {join1: join1, name: name},\n  on: [\"_time\", \"index\"]\n)\n\njoin3 = join(\n  tables: {join2: join2, precision: precision},\n  on: [\"_time\", \"index\"]\n)\n\njoin4 = join(\n  tables: {join3: join3, scale: scale},\n  on: [\"_time\", \"index\"]\n)\n\nfinalJoin = join(\n  tables: {join4: join4, status: status},\n  on: [\"_time\", \"index\"]\n)\n  |> map(fn: (r) => ({\n      _time: r._time,\n      index: r.index,\n      SensorName: r[\"_value_join2\"],\n      SensorStatus: r[\"_value_status\"],\n      SensorPrecision: r[\"_value_precision\"],\n      SensorScale: r[\"_value_join4\"],\n      SensorType: r[\"_value_typ\"],\n      OriginalValue: r[\"_value_value\"],\n      TransformedValue: if r[\"_value_join4\"] == 8 then float(v: r[\"_value_value\"]) / 1000.0\n                        else if r[\"_value_join4\"] == 9 then float(v: r[\"_value_value\"])\n                        else if r[\"_value_join4\"] == 7 then float(v: r[\"_value_value\"]) / 1000000.0\n                        else if r[\"_value_join4\"] == 6 then float(v: r[\"_value_value\"]) / 1000000000.0\n                        else if r[\"_value_join4\"] == 5 then float(v: r[\"_value_value\"]) / 1000000000000.0\n                        else if r[\"_value_join4\"] == 4 then float(v: r[\"_value_value\"]) / 1000000000000000.0\n                        else if r[\"_value_join4\"] == 3 then float(v: r[\"_value_value\"]) / 1000000000000000000.0\n                        else if r[\"_value_join4\"] == 2 then float(v: r[\"_value_value\"]) / 1000000000000000000000.0\n                        else if r[\"_value_join4\"] == 1 then float(v: r[\"_value_value\"]) / 1000000000000000000000000.0\n                        else if r[\"_value_join4\"] == 10 then float(v: r[\"_value_value\"]) * 1000.0\n                        else if r[\"_value_join4\"] == 11 then float(v: r[\"_value_value\"]) * 1000000.0\n                        else if r[\"_value_join4\"] == 12 then float(v: r[\"_value_value\"]) * 1000000000.0\n                        else if r[\"_value_join4\"] == 13 then float(v: r[\"_value_value\"]) * 1000000000000.0\n                        else if r[\"_value_join4\"] == 14 then float(v: r[\"_value_value\"]) * 1000000000000000.0\n                        else if r[\"_value_join4\"] == 15 then float(v: r[\"_value_value\"]) * 1000000000000000000.0\n                        else if r[\"_value_join4\"] == 16 then float(v: r[\"_value_value\"]) * 1000000000000000000000.0\n                        else if r[\"_value_join4\"] == 17 then float(v: r[\"_value_value\"]) * 1000000000000000000000000.0\n                        else float(v: r[\"_value_value\"])\n  }))\n  |> filter(fn: (r) => r[\"SensorType\"] == 8)\n  |> map(fn: (r) => ({ r with _value: r.TransformedValue }))\n  |> keep(columns: [\"_time\", \"SensorName\", \"_value\"])  \n  |> group(columns: [\"SensorName\"], mode:\"by\")\n  |> yield(name: \"final_results\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Temperature",
+          "transparent": true,
+          "type": "timeseries"
+        }
+      ],
+      "title": "Overview",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 10,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 5,
+            "x": 0,
+            "y": 2
+          },
+          "id": 3,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"CPU1m\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> last(column: \"_value\")\n",
+              "refId": "A"
+            }
+          ],
+          "transparent": true,
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 19,
+            "x": 5,
+            "y": 2
+          },
+          "id": 8,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"CPU1m\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)",
+              "refId": "A"
+            }
+          ],
+          "transparent": true,
+          "type": "timeseries"
+        }
+      ],
+      "title": "CPU Used",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 11,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 80
+                  },
+                  {
+                    "color": "red",
+                    "value": 90
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 5,
+            "x": 0,
+            "y": 36
+          },
+          "id": 4,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"MemUsed\" or r[\"_field\"] == \"MemFree\")\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with _value: (float(v: r.MemUsed) * 100.0) / (float(v: r.MemFree) + float(v: r.MemUsed)) }))\n  |> last(column: \"_value\")\n  |> keep(columns: [\"_value\"])\n",
+              "refId": "A"
+            }
+          ],
+          "transparent": true,
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "bytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 19,
+            "x": 5,
+            "y": 36
+          },
+          "id": 9,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"MemUsed\")",
+              "refId": "A"
+            }
+          ],
+          "transparent": true,
+          "type": "timeseries"
+        }
+      ],
+      "title": "Memory Used",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "id": 30,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "left",
+                "cellOptions": {
+                  "applyToRow": false,
+                  "mode": "gradient",
+                  "type": "color-background"
+                },
+                "filterable": true,
+                "inspect": false,
+                "width": 160
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "transparent"
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "SensorScale"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "index": 0,
+                            "text": "Yocto"
+                          },
+                          "2": {
+                            "index": 1,
+                            "text": "Zepto"
+                          },
+                          "3": {
+                            "index": 2,
+                            "text": "Atto"
+                          },
+                          "4": {
+                            "index": 3,
+                            "text": "Femto"
+                          },
+                          "5": {
+                            "index": 4,
+                            "text": "Pico"
+                          },
+                          "6": {
+                            "index": 5,
+                            "text": "Nano"
+                          },
+                          "7": {
+                            "index": 6,
+                            "text": "Micro"
+                          },
+                          "8": {
+                            "index": 7,
+                            "text": "Milli"
+                          },
+                          "9": {
+                            "index": 8,
+                            "text": "Units"
+                          },
+                          "10": {
+                            "index": 9,
+                            "text": "Kilo"
+                          },
+                          "11": {
+                            "index": 10,
+                            "text": "Mega"
+                          },
+                          "12": {
+                            "index": 11,
+                            "text": "Giga"
+                          },
+                          "13": {
+                            "index": 12,
+                            "text": "Tera"
+                          },
+                          "14": {
+                            "index": 13,
+                            "text": "Exa"
+                          },
+                          "15": {
+                            "index": 14,
+                            "text": "Peta"
+                          },
+                          "16": {
+                            "index": 15,
+                            "text": "Zetta"
+                          },
+                          "17": {
+                            "index": 16,
+                            "text": "Yotta"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "SensorName"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Sensor Status"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "color": "green",
+                            "index": 0,
+                            "text": "Ok"
+                          },
+                          "2": {
+                            "color": "red",
+                            "index": 1,
+                            "text": "Unavailable"
+                          },
+                          "3": {
+                            "color": "dark-red",
+                            "index": 2,
+                            "text": "Nonoperational"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "SensorType"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "index": 0,
+                            "text": "Other"
+                          },
+                          "2": {
+                            "index": 1,
+                            "text": "Unknown"
+                          },
+                          "3": {
+                            "index": 2,
+                            "text": "VoltsAC"
+                          },
+                          "4": {
+                            "index": 3,
+                            "text": "VoltsDC"
+                          },
+                          "5": {
+                            "index": 4,
+                            "text": "Amperes"
+                          },
+                          "6": {
+                            "index": 5,
+                            "text": "Watts"
+                          },
+                          "7": {
+                            "index": 6,
+                            "text": "Hertz"
+                          },
+                          "8": {
+                            "index": 7,
+                            "text": "Celsius"
+                          },
+                          "9": {
+                            "index": 8,
+                            "text": "PercentRH"
+                          },
+                          "10": {
+                            "index": 9,
+                            "text": "Rpm"
+                          },
+                          "11": {
+                            "index": 10,
+                            "text": "Cmm"
+                          },
+                          "12": {
+                            "index": 11,
+                            "text": "Truthvalue"
+                          },
+                          "13": {
+                            "index": 12,
+                            "text": "SpecialEnum"
+                          },
+                          "14": {
+                            "index": 13,
+                            "text": "?"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 12,
+            "x": 0,
+            "y": 37
+          },
+          "id": 31,
+          "maxPerRow": 2,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "11.0.0",
+          "repeat": "SensorTypes",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "typ = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorType\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n  |> last(column: \"_time\")\n\nvalue = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorValue\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n  |> last(column: \"_time\")\n\nname = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorName\")\n  |> filter(fn: (r) => r[\"agent_host\"] == \"172.19.0.47\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n  |> last(column: \"_time\")\n\nprecision = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorPrecision\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n  |> last(column: \"_time\")\n\nscale = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorScale\")\n  |> filter(fn: (r) => r[\"agent_host\"] == \"172.19.0.47\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n  |> last(column: \"_time\")\n\nstatus = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorStatus\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n  |> last(column: \"_time\")\n\njoin1 = join(\n  tables: {typ: typ, value: value},\n  on: [\"_time\", \"index\"]\n)\n\njoin2 = join(\n  tables: {join1: join1, name: name},\n  on: [\"_time\", \"index\"]\n)\n\njoin3 = join(\n  tables: {join2: join2, precision: precision},\n  on: [\"_time\", \"index\"]\n)\n\njoin4 = join(\n  tables: {join3: join3, scale: scale},\n  on: [\"_time\", \"index\"]\n)\n\nfinalJoin = join(\n  tables: {join4: join4, status: status},\n  on: [\"_time\", \"index\"]\n)\n  |> map(fn: (r) => ({\n      _time: r._time,\n      index: r.index,\n      SensorName: r[\"_value_join2\"],\n      SensorStatus: r[\"_value_status\"],\n      SensorPrecision: r[\"_value_precision\"],\n      SensorScale: r[\"_value_join4\"],\n      SensorType: r[\"_value_typ\"],\n      OriginalValue: r[\"_value_value\"],\n      TransformedValue: if r[\"_value_join4\"] == 8 then float(v: r[\"_value_value\"]) / 1000.0\n                        else if r[\"_value_join4\"] == 9 then float(v: r[\"_value_value\"])\n                        else if r[\"_value_join4\"] == 7 then float(v: r[\"_value_value\"]) / 1000000.0\n                        else if r[\"_value_join4\"] == 6 then float(v: r[\"_value_value\"]) / 1000000000.0\n                        else if r[\"_value_join4\"] == 5 then float(v: r[\"_value_value\"]) / 1000000000000.0\n                        else if r[\"_value_join4\"] == 4 then float(v: r[\"_value_value\"]) / 1000000000000000.0\n                        else if r[\"_value_join4\"] == 3 then float(v: r[\"_value_value\"]) / 1000000000000000000.0\n                        else if r[\"_value_join4\"] == 2 then float(v: r[\"_value_value\"]) / 1000000000000000000000.0\n                        else if r[\"_value_join4\"] == 1 then float(v: r[\"_value_value\"]) / 1000000000000000000000000.0\n                        else if r[\"_value_join4\"] == 10 then float(v: r[\"_value_value\"]) * 1000.0\n                        else if r[\"_value_join4\"] == 11 then float(v: r[\"_value_value\"]) * 1000000.0\n                        else if r[\"_value_join4\"] == 12 then float(v: r[\"_value_value\"]) * 1000000000.0\n                        else if r[\"_value_join4\"] == 13 then float(v: r[\"_value_value\"]) * 1000000000000.0\n                        else if r[\"_value_join4\"] == 14 then float(v: r[\"_value_value\"]) * 1000000000000000.0\n                        else if r[\"_value_join4\"] == 15 then float(v: r[\"_value_value\"]) * 1000000000000000000.0\n                        else if r[\"_value_join4\"] == 16 then float(v: r[\"_value_value\"]) * 1000000000000000000000.0\n                        else if r[\"_value_join4\"] == 17 then float(v: r[\"_value_value\"]) * 1000000000000000000000000.0\n                        else float(v: r[\"_value_value\"])\n  }))\n  |> filter(fn: (r) => r[\"SensorType\"] == ${SensorTypes})\n  |> yield(name: \"final_results\")\n",
+              "refId": "A"
+            }
+          ],
+          "transformations": [
+            {
+              "id": "merge",
+              "options": {}
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "OriginalValue": true,
+                  "SensorPrecision": true,
+                  "SensorScale": true,
+                  "SensorStatus": false,
+                  "SensorType": false,
+                  "_time": true
+                },
+                "includeByName": {},
+                "indexByName": {
+                  "OriginalValue": 5,
+                  "SensorName": 1,
+                  "SensorPrecision": 3,
+                  "SensorScale": 4,
+                  "SensorStatus": 2,
+                  "SensorType": 7,
+                  "TransformedValue": 6,
+                  "_time": 0
+                },
+                "renameByName": {
+                  "SensorStatus": "Sensor Status",
+                  "SensorType": "Sensor Typ",
+                  "TransformedValue": "Value",
+                  "_time": "",
+                  "_value_join2": "Sensor Name",
+                  "_value_join4": "Original scale",
+                  "_value_precision": "Precision",
+                  "_value_status": "Status",
+                  "_value_temperature": "",
+                  "_value_typ": "Typ",
+                  "_value_value": "Value converted to unit"
+                }
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "table"
+        }
+      ],
+      "title": "All Sensors",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 41,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 1
+          },
+          "id": 42,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "vlanName"
+              }
+            ]
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "import \"strings\"\n\n// Lade VLAN-Daten mit Namen und behalte die Index-Spalte\nvlans = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r._measurement == \"VLAN\")\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> rename(columns: {index: \"vmVlan\"}) // Umbenennen der Spalte index in vmVlan\n  |> keep(columns: [\"vmVlan\", \"vlanName\", \"vlanDot10Said\", \"vlanMtu\", \"vlanState\", \"vlanType\"])\n  |> map(fn: (r) => ({\n      r with vmVlan: strings.replaceAll(v: string(v: r.vmVlan), t: \"'\", u: \"\")\n    }))\n  |> map(fn: (r) => ({\n      r with vmVlan: strings.replaceAll(v: r.vmVlan, t: \",\", u: \"\")\n    }))\n  |> map(fn: (r) => ({\n      r with vmVlan: if strings.hasPrefix(v: r.vmVlan, prefix: \"1.\") then strings.trimPrefix(v: r.vmVlan, prefix: \"1.\") else r.vmVlan\n    }))\n  |> last(column: \"vlanName\")\n\nvlan_membership = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r._measurement == \"VlanMembership\")\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> rename(columns: {index: \"ifIndex\"}) // Umbenennen der Spalte index in ifIndex\n  |> map(fn: (r) => ({ r with ifIndex: string(v: r.ifIndex) })) // Konvertiere ifIndex zu String\n  |> last(column: \"vmVlan\")\n\ninterfaces = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ifDescr\" or r[\"_field\"] == \"ifIndex\")\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with ifIndex: string(v: r.ifIndex) })) // Konvertiere ifIndex zu String\n  |> last(column: \"ifName\")  \n\n\nvlan_interfaces = join(\n  tables: {vlan_membership: vlan_membership, interfaces: interfaces},\n  on: [\"ifIndex\"]\n)\n\nresult = join(\n  tables: {vlans: vlans, vlan_interfaces: vlan_interfaces},\n  on: [\"vmVlan\"]\n)\n  |> map(fn: (r) => ({ r with VlanID: r.vmVlan }))\n\nresult\n",
+              "refId": "A"
+            }
+          ],
+          "transformations": [
+            {
+              "id": "merge",
+              "options": {}
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "_time_interfaces": true,
+                  "_time_vlan_membership": true,
+                  "ifAdminStatus": true,
+                  "ifHCInOctets": true,
+                  "ifHCOutOctets": true,
+                  "ifHighSpeed": true,
+                  "ifInDiscards": true,
+                  "ifInErrors": true,
+                  "ifInUnknownProtos": true,
+                  "ifOperStatus": true,
+                  "ifOutDiscards": true,
+                  "ifOutErrors": true,
+                  "vlanIfIndex": true
+                },
+                "includeByName": {},
+                "indexByName": {
+                  "VlanID": 2,
+                  "ifAdminStatus": 3,
+                  "ifDescr": 0,
+                  "ifHCInOctets": 4,
+                  "ifHCOutOctets": 5,
+                  "ifHighSpeed": 6,
+                  "ifInDiscards": 7,
+                  "ifInErrors": 8,
+                  "ifInUnknownProtos": 9,
+                  "ifOperStatus": 10,
+                  "ifOutDiscards": 11,
+                  "ifOutErrors": 12,
+                  "vlanDot10Said": 13,
+                  "vlanIfIndex": 14,
+                  "vlanMtu": 15,
+                  "vlanName": 1,
+                  "vlanState": 16,
+                  "vlanType": 17,
+                  "vmPortStatus": 18
+                },
+                "renameByName": {}
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "table"
+        }
+      ],
+      "title": "Vlan",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 36,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "left",
+                "cellOptions": {
+                  "applyToRow": false,
+                  "mode": "gradient",
+                  "type": "color-background"
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "transparent"
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "vpcPeerKeepAliveStatus"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "color": "yellow",
+                            "index": 0,
+                            "text": "Disabled"
+                          },
+                          "2": {
+                            "color": "green",
+                            "index": 1,
+                            "text": "Alive"
+                          },
+                          "3": {
+                            "color": "red",
+                            "index": 2,
+                            "text": "Peer Unreachable"
+                          },
+                          "4": {
+                            "color": "yellow",
+                            "index": 3,
+                            "text": "Alive But DomainId Dismatch"
+                          },
+                          "5": {
+                            "color": "purple",
+                            "index": 4,
+                            "text": "Suspended As ISSU"
+                          },
+                          "6": {
+                            "color": "purple",
+                            "index": 5,
+                            "text": "Suspended As Dest IP Unreachable"
+                          },
+                          "7": {
+                            "color": "purple",
+                            "index": 6,
+                            "text": "Suspended As VRF Unusable"
+                          },
+                          "8": {
+                            "color": "purple",
+                            "index": 7,
+                            "text": "Misconfigured"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "vpcRoleStatus"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "index": 0,
+                            "text": "Primary Secondary"
+                          },
+                          "2": {
+                            "index": 1,
+                            "text": "Primary"
+                          },
+                          "3": {
+                            "index": 2,
+                            "text": "Secondary Primary"
+                          },
+                          "4": {
+                            "index": 3,
+                            "text": "Secondary"
+                          },
+                          "5": {
+                            "index": 4,
+                            "text": "None Established"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 80
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Index"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 55
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Peer Keep Alive Time"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Local Oper Mac Address"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 190
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Local Role Admin Prio"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 165
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Local Role Oper Prio"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 165
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Peer Keep Alive Status"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 170
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Peer Keep Alive Time"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 165
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "System Admin Mac Address"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 200
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "System Admin Priority"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 170
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "System Oper Mac Address"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 200
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "System Oper Priority"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 170
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Role Status"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 140
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 38
+          },
+          "id": 37,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"VPC\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> keep(columns: [\"_time\", \"source\", \"index\", \"vpcSystemOperMacAddress\", \"vpcLocalRoleAdminPriority\", \"vpcLocalRoleOperPriority\", \"vpcPeerKeepAliveTime\", \"vpcRoleStatus\", \"vpcPeerKeepAliveStatus\" \"vpcSystemAdminMacAddress\", \"vpcSystemAdminPriority\", \"vpcSystemOperMacAddress\", \"vpcSystemOperPriority\", \"vpcLocalOperMacAddress\"])\n  |> group(columns: [\"source\", \"index\"], mode:\"by\")\n  |> last(column: \"_time\")\n  |> map(fn: (r) => ({ r with Name: r.source }))\n  |> map(fn: (r) => ({ r with Index: r.index }))\n",
+              "refId": "A"
+            }
+          ],
+          "transformations": [
+            {
+              "id": "merge",
+              "options": {}
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "_time": true
+                },
+                "includeByName": {},
+                "indexByName": {
+                  "Index": 2,
+                  "Name": 1,
+                  "_time": 0,
+                  "vpcLocalOperMacAddress": 3,
+                  "vpcLocalRoleAdminPriority": 4,
+                  "vpcLocalRoleOperPriority": 5,
+                  "vpcPeerKeepAliveStatus": 6,
+                  "vpcPeerKeepAliveTime": 7,
+                  "vpcRoleStatus": 8,
+                  "vpcSystemAdminMacAddress": 9,
+                  "vpcSystemAdminPriority": 10,
+                  "vpcSystemOperMacAddress": 11,
+                  "vpcSystemOperPriority": 12
+                },
+                "renameByName": {
+                  "Index": "Index",
+                  "Name": "Name",
+                  "vpcLocalOperMacAddress": "Local Oper Mac Address",
+                  "vpcLocalRoleAdminPriority": "Local Role Admin Prio",
+                  "vpcLocalRoleOperPriority": "Local Role Oper Prio",
+                  "vpcPeerKeepAliveStatus": "Peer Keep Alive Status",
+                  "vpcPeerKeepAliveTime": "Peer Keep Alive Time",
+                  "vpcRoleStatus": "Role Status",
+                  "vpcSystemAdminMacAddress": "System Admin Mac Address",
+                  "vpcSystemAdminPriority": "System Admin Priority",
+                  "vpcSystemOperMacAddress": "System Oper Mac Address",
+                  "vpcSystemOperPriority": "System Oper Priority"
+                }
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "table"
+        }
+      ],
+      "title": "VPC",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 14,
+      "panels": [],
+      "title": "Interface Overview",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Admin Status"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Oper Status"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Speed"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "Mbits"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Admin Status"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "green",
+                        "index": 0,
+                        "text": "Up"
+                      },
+                      "2": {
+                        "color": "red",
+                        "index": 1,
+                        "text": "Down"
+                      },
+                      "3": {
+                        "color": "yellow",
+                        "index": 2,
+                        "text": "Testing"
+                      },
+                      "4": {
+                        "color": "purple",
+                        "index": 3,
+                        "text": "Unknown"
+                      },
+                      "5": {
+                        "color": "super-light-purple",
+                        "index": 4,
+                        "text": "Dormant"
+                      },
+                      "6": {
+                        "color": "light-red",
+                        "index": 5,
+                        "text": "Not Present"
+                      },
+                      "7": {
+                        "color": "dark-red",
+                        "index": 6,
+                        "text": "Lower Layer Down"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Oper Status"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "green",
+                        "index": 0,
+                        "text": "Up"
+                      },
+                      "2": {
+                        "color": "red",
+                        "index": 1,
+                        "text": "Down"
+                      },
+                      "3": {
+                        "color": "yellow",
+                        "index": 2,
+                        "text": "Testing"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 7
+      },
+      "id": 2,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 42,
+        "showHeader": true
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "status = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"ifOperStatus\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"ifName\"] =~ /^${Interface:regex}$/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> rename(columns: {_value: \"_value_status\"})\n  |> last(column: \"_value_status\")\n\n\nadmin = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"ifAdminStatus\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"ifName\"] =~ /^${Interface:regex}$/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> rename(columns: {_value: \"_value_admin\"})\n  |> last(column: \"_value_admin\")\n\nspeed = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"ifHighSpeed\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"ifName\"] =~ /^${Interface:regex}$/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> rename(columns: {_value: \"_value_speed\"})\n  |> last(column: \"_value_speed\")\n\nstatus_admin = join(\n  tables: {status: status, admin: admin},\n  on: [\"_time\", \"ifName\"]\n)\n\nfinal_join = join(\n  tables: {status_admin: status_admin, speed: speed},\n  on: [\"_time\", \"ifName\"]\n)\n\nfinal_join\n  |> map(fn: (r) => ({ r with Port: r.ifName }))\n  |> map(fn: (r) => ({ r with OperStatusCause: r.ifOperStatusCause_status }))\n  |> keep(columns: [\"_time\", \"_value_status\", \"_value_admin\", \"_value_speed\", \"ifName\", \"Port\", \"agent_host\", \"OperStatusCause\" ])\n  |> last(column: \"_value_admin\")\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Interface Overview",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "_time": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "OperStatusCause": 4,
+              "Port": 0,
+              "_time": 1,
+              "_value_admin": 2,
+              "_value_speed": 5,
+              "_value_status": 3
+            },
+            "renameByName": {
+              "OperStatusCause": "Oper Status Cause",
+              "Port": "Interface",
+              "_value_admin": "Admin Status",
+              "_value_speed": "Speed",
+              "_value_status": "Oper Status"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "mode": "basic",
+              "type": "color-background"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PortState"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "red",
+                        "index": 0,
+                        "text": "Disabled"
+                      },
+                      "2": {
+                        "color": "super-light-red",
+                        "index": 1,
+                        "text": "Blocking"
+                      },
+                      "3": {
+                        "color": "purple",
+                        "index": 2,
+                        "text": "Listening"
+                      },
+                      "4": {
+                        "color": "super-light-purple",
+                        "index": 3,
+                        "text": "Learning"
+                      },
+                      "5": {
+                        "color": "yellow",
+                        "index": 4,
+                        "text": "Forwarding"
+                      },
+                      "6": {
+                        "color": "dark-red",
+                        "index": 5,
+                        "text": "Broken"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Port Designated Root"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "green",
+                        "index": 0,
+                        "text": "Enabled"
+                      },
+                      "2": {
+                        "color": "red",
+                        "index": 1,
+                        "text": "Disabled"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 7
+      },
+      "id": 26,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "import \"strings\"\n\n// Query for interface data\ninterface = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"IF\" and r[\"_field\"] == \"ifDescr\" and r[\"source\"] == \"${Hostname}\")\n  |> keep(columns: [\"index\", \"_value\", \"_time\"])\n  |> last(column: \"index\")\n  |> map(fn: (r) => ({ r with PortIndex: r.index }))\n\n// Query for stb data\nstb = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"STP\" and r[\"source\"] == \"${Hostname}\" and r[\"_field\"] == \"dot1dBasePortIfIndex\")\n  |> keep(columns: [\"_value\", \"index\", \"_time\"])\n  |> last(column: \"index\")\n  |> map(fn: (r) => ({\n      _time: r._time,\n      PortIndex: strings.replaceAll(v: string(v: r._value), t: \"'\", u: \"\"),\n      index_stb: r.index\n  }))\n\n// Updated query for STP_PortState, including STP_PortDesignatedRoot and STP_PortPathCost\nstp_port_state = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"STP\" and r[\"source\"] == \"${Hostname}\" and (r[\"_field\"] == \"STP_PortState\" or r[\"_field\"] == \"STP_PortDesignatedRoot\" or r[\"_field\"] == \"STP_PortPathCost\"))\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({\n      _time: r._time,\n      index_stb: r.index, // Assuming 'index' is part of the pivot\n      PortState: r.STP_PortState,\n      PortDesignatedRoot: r.STP_PortDesignatedRoot,\n      PortPathCost: r.STP_PortPathCost\n  }))\n  |> keep(columns: [\"index_stb\", \"PortState\", \"PortDesignatedRoot\", \"PortPathCost\"])\n\n// First join between stb and interface on PortIndex\njoined_results = join(\n  tables: {stb: stb, iface: interface},\n  on: [\"PortIndex\"]\n)\n\n// Second join including the stp_port_state\nfinal_join = join(\n  tables: {status_admin: joined_results, stp_state: stp_port_state},\n  on: [\"index_stb\"]\n)\n  |> yield(name: \"finalResults\")\n",
+          "refId": "A"
+        }
+      ],
+      "title": "STP Overview",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PortIndex": true,
+              "_time_iface": true,
+              "_time_stb": true,
+              "index_stb": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "PortDesignatedRoot": 4,
+              "PortIndex": 5,
+              "PortPathCost": 6,
+              "PortState": 3,
+              "_time_iface": 0,
+              "_time_stb": 1,
+              "_value": 2,
+              "index_stb": 7
+            },
+            "renameByName": {
+              "PortDesignatedRoot": "Port Designated Root",
+              "PortIndex": "",
+              "PortPathCost": "Port Path Cost",
+              "PortState": "Port State",
+              "_value": "Interface",
+              "_value_status_admin": "Port",
+              "_value_stp_state": "Status"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 27,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "import \"strings\"\n\n// Retrieve interface descriptions\ninterfaces = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)  // Definieren des Zeitbereichs\n  |> filter(fn: (r) => r._measurement == \"IF\")  // Filtern nach Messung \"IF\"\n  |> filter(fn: (r) => r._field == \"ifDescr\" or r._field == \"ifName\" or r._field == \"ifIndex\")  // Filtern nach relevanten Feldern\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")  // Pivotieren der Daten, um Felder als Spalten zu haben\n  |> map(fn: (r) => ({\n      r with\n      ifIndex_str: string(v: r.ifIndex)  // Umwandeln des ifIndex-Felds in eine Zeichenfolge\n  }))\n  |> map(fn: (r) => ({\n      r with\n      PortIndex: strings.replaceAll(v: r.ifIndex_str, t: \"’\", u: \"\")  // Ersetzen von nicht-numerischen Zeichen und Umbenennen in PortIndex\n  }))\n  |> drop(columns: [\"ifIndex\", \"ifIndex_str\"])  // Entfernen der alten Felder ifIndex und ifIndex_str\n  |> keep(columns: [\"_time\", \"PortIndex\", \"ifDescr\", \"ifName\"])  // Beibehalten der gewünschten Spalten\n\n// Retrieve LACP data\nlacp_data = from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)  // Definieren des Zeitbereichs\n  |> filter(fn: (r) => r._measurement == \"LACP\")  // Filtern nach Messung \"LACP\"\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r._field == \"lacpPortNumber\" or r._field == \"lacpPortState\" or r._field == \"lacpPortPartnerAdminState\" or r._field == \"lacpPortPartnerSystemID\" or r._field == \"lacpPortPartnerPortNumber\" or r._field == \"lacpPortPartnerKey\")  // Filtern nach relevanten Feldern\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")  // Pivotieren der Daten, um Felder als Spalten zu haben\n  |> map(fn: (r) => ({ r with PortIndex: r.index }))  // Umbenennen des Index-Felds in PortIndex\n  |> keep(columns: [\"_time\", \"lacpPortNumber\", \"lacpPortState\", \"lacpPortPartnerAdminState\", \"lacpPortPartnerSystemID\", \"lacpPortPartnerPortNumber\", \"lacpPortPartnerKey\", \"PortIndex\"])  // Beibehalten der gewünschten Spalten\n\n// Join LACP data with interface descriptions\nlacp_with_interfaces = join(\n  tables: {interfaces: interfaces, lacp_data: lacp_data},  // Verbinden der beiden Datenströme\n  on: [\"_time\", \"PortIndex\"]  // Verbinden auf Basis der Zeit und PortIndex\n)\n\n// Ausgabe der kombinierten Daten\nlacp_with_interfaces\n  |> last(column: \"_time\")",
+          "refId": "A"
+        }
+      ],
+      "title": "LACP Overview",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PortIndex": true,
+              "_time": true,
+              "lacpPortNumber": true,
+              "lacpPortPartnerKey": true,
+              "lacpPortPartnerPortNumber": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "PortIndex": "",
+              "_time": "",
+              "ifDescr": "Interface",
+              "lacpPortNumber": "Port Number",
+              "lacpPortPartnerAdminState": "Port Partner Admin State",
+              "lacpPortPartnerKey": "Port Partner Key",
+              "lacpPortPartnerPortNumber": "Port Partner Port Number",
+              "lacpPortPartnerSystemID": "Port Partner System ID",
+              "lacpPortState": "Port State"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 24,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "bytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 12,
+            "x": 0,
+            "y": 8
+          },
+          "id": 19,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"IF\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ifInDiscards\")\n  |> filter(fn: (r) => r[\"ifName\"] =~ /^${Interface:regex}$/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"ifName\", \"_value\", \"_time\"])\n  |> yield(name: \"mean\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Interface Statistics ifInDiscards",
+          "transparent": true,
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "bytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 12,
+            "x": 12,
+            "y": 8
+          },
+          "id": 20,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"IF\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ifInErrors\")\n  |> filter(fn: (r) => r[\"ifName\"] =~ /^${Interface:regex}$/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"ifName\", \"_value\", \"_time\"])\n  |> yield(name: \"mean\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Interface Statistics ifInErrors",
+          "transparent": true,
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "bytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 18
+          },
+          "id": 21,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"IF\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ifInUnknownProtos\")\n  |> filter(fn: (r) => r[\"ifName\"] =~ /^${Interface:regex}$/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"ifName\", \"_value\", \"_time\"])\n  |> yield(name: \"mean\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Interface Statistics ifInUnknownProtos",
+          "transparent": true,
+          "type": "timeseries"
+        }
+      ],
+      "title": "Interface In",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "id": 25,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "bytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 12,
+            "x": 0,
+            "y": 9
+          },
+          "id": 17,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"IF\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ifHCOutOctets\")\n  |> filter(fn: (r) => r[\"ifName\"] =~ /^${Interface:regex}$/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"ifName\", \"_value\", \"_time\"])\n  |> yield(name: \"mean\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Interface Statistics ifHCOutOctets",
+          "transparent": true,
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "bytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 12,
+            "x": 12,
+            "y": 9
+          },
+          "id": 22,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"IF\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ifOutDiscards\")\n  |> filter(fn: (r) => r[\"ifName\"] =~ /^${Interface:regex}$/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"ifName\", \"_value\", \"_time\"])\n  |> yield(name: \"mean\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Interface Statistics ifOutDiscards",
+          "transparent": true,
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "bytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 19
+          },
+          "id": 23,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"IF\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ifOutErrors\")\n  |> filter(fn: (r) => r[\"ifName\"] =~ /^${Interface:regex}$/)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> keep(columns: [\"ifName\", \"_value\", \"_time\"])\n  |> yield(name: \"mean\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Interface Statistics ifOutErrors",
+          "transparent": true,
+          "type": "timeseries"
+        }
+      ],
+      "title": "Interface Out",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB}"
+        },
+        "definition": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"Name\")\n  |> keep(columns: [\"_value\"])  ",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Hostname",
+        "multi": false,
+        "name": "Hostname",
+        "options": [],
+        "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"Name\")\n  |> keep(columns: [\"_value\"])  ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB}"
+        },
+        "definition": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ifAdminStatus\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> keep(columns: [\"ifName\"])\n",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Interface",
+        "multi": true,
+        "name": "Interface",
+        "options": [],
+        "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"ifAdminStatus\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> keep(columns: [\"ifName\"])\n",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": "",
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB}"
+        },
+        "definition": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorType\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n  |> last(column: \"_time\")",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Sensor Types Nr",
+        "multi": true,
+        "name": "SensorTypes",
+        "options": [],
+        "query": "from(bucket: \"cisconx9000\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"SensorType\")\n  |> filter(fn: (r) => r[\"source\"] == \"${Hostname}\")\n  |> keep(columns: [\"_time\", \"_value\", \"index\"])  \n  |> last(column: \"_time\")",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timeRangeUpdatedDuringEditOrView": false,
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Cisco Nexus",
+  "uid": "fdofqner7jdvke",
+  "version": 70,
+  "weekStart": ""
+}
