@@ -495,10 +495,10 @@
             "uid": "${DS_PROMETHEUS-ONPREM}"
           },
           "editorMode": "code",
-          "expr": "max((node_filesystem_size_bytes{job=~\"Linux\"}-node_filesystem_free_bytes) *100/(node_filesystem_avail_bytes {job=~\"Linux\"}+(node_filesystem_size_bytes{job=~\"Linux\"}-node_filesystem_free_bytes{job=~\"Linux\"})))by(instance)",
+          "expr": "100 - ((node_filesystem_free_bytes{mountpoint!=\"/boot/efi\", fstype!~\"(tmpfs|rootfs)\"}) / (node_filesystem_size_bytes{ mountpoint!=\"/boot/efi\", fstype!~\"(tmpfs|rootfs)\"})) * 100",
           "format": "table",
           "hide": false,
-          "legendFormat": "{{instance}}",
+          "legendFormat": "__auto",
           "range": true,
           "refId": "D"
         },
@@ -687,6 +687,6 @@
   "timezone": "",
   "title": "Linux Server Summary",
   "uid": "426942",
-  "version": 18,
+  "version": 19,
   "weekStart": ""
 }
