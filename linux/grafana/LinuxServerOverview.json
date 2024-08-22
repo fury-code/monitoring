@@ -385,7 +385,7 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1230,8 +1230,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1375,8 +1374,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1515,7 +1513,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-5m",
     "to": "now"
   },
   "timeRangeUpdatedDuringEditOrView": false,
@@ -1523,6 +1521,6 @@
   "timezone": "",
   "title": "Linux Server Overview",
   "uid": "6942069420asd",
-  "version": 14,
+  "version": 16,
   "weekStart": ""
 }
